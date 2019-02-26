@@ -6,28 +6,54 @@ import ProductsList from '../../components/products-list';
 
 import BagService from '../../services/bag-service';
 
-async function BagPage(bagId) {
-    let bag;
+const body = document.querySelector('body');
+let bag;
 
+const BagPage = {
+  async load(bagId) {
     try {
-		bag = await BagService.getBagByIdAsync(bagId);
-		render();
+      bag = await BagService.getBagByIdAsync(bagId);
     } catch (e) {
-        return '<div class="error">Error loading bag items...</div>';
-	}
-	
-	document.querySelector('.product-card .remove-btn').addEventListener('click', target => {
-		if (await BagService.deleteBagItemById(bagId)) {
-			// bag.remove item
-		}
-	});
-	
-	render = () => `<div class="page">
-						${Header(bag.items)}
-						${ProductsList(bag.items)}
-						${Footer()}
-					</div>`;
-	
-}
+      return '<div class="error">Error loading bag items...</div>';
+    }
+
+    return `<div class="page">
+              ${Header(bag.items)}
+              ${ProductsList(bag.items)}
+              ${Footer()}
+            </div>`;
+  },
+
+  // Add events to remove badg items
+  async addEvents(bagId) {
+    const removeItemButtons = document.querySelectorAll('.product-card .remove-btn');
+
+    if (removeItemButtons) {
+      for (let i = 0; i < removeItemButtons.length; i++) {
+        removeItemButtons[i].addEventListener('click', async event => {
+          let itemId = event.target.id;
+          const isItemReadyToBeRemoved = await BagService.deleteBagItemById(bagId, itemId)
+
+          if (isItemReadyToBeRemoved) {
+            bag.items = bag.items.filter(i => i.id !== itemId);
+            this.reRender();
+          }
+        });
+      }
+    }
+  },
+
+  reRender() {
+    body.innerHTML = `<div class="page">
+                      ${Header(bag.items)}
+                      ${ProductsList(bag.items)}
+                      ${Footer()}
+                    </div>`;
+    this.addEvents(bag.id);
+  }
+};
+
+// async function BagPage(bagId) {
+// }
 
 export default BagPage;

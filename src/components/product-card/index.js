@@ -3,7 +3,7 @@ import closeIcon from '../../assets/remove.svg';
 
 const ProductCard = item => `<div class="product-card">
                 <div class="remove-btn">
-                    <img src="${closeIcon}" />
+                    <img src="${closeIcon}" id="${item.id}"/>
                 </div>
                 <div class="image-container">
                     <img class="image" src="${item.image}" />
