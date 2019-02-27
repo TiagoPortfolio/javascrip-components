@@ -13,7 +13,7 @@ describe('bag page', () => {
             .getBagByIdAsync
             .mockImplementationOnce(() => Promise.resolve(mockDatabase.bag[0]));
 
-        expect(await BagPage(bagId)).toMatchSnapshot();
+        expect(await BagPage.load(bagId)).toMatchSnapshot();
     });
 
     it('it renders differently when there is an error', async () => {
@@ -21,6 +21,6 @@ describe('bag page', () => {
             .getBagByIdAsync
             .mockImplementationOnce(() => Promise.reject());
 
-        expect(await BagPage(bagId)).toMatchSnapshot();
+        expect(await BagPage.load(bagId)).toMatchSnapshot();
     });
 });

@@ -24,8 +24,8 @@ const BagPage = {
             </div>`;
   },
 
-  // Add events to remove badg items
-  async addEvents(bagId) {
+  // Add events to remove bag items
+  addEvents(bagId) {
     const removeItemButtons = document.querySelectorAll('.product-card .remove-btn');
 
     if (removeItemButtons) {
@@ -52,8 +52,5 @@ const BagPage = {
     this.addEvents(bag.id);
   }
 };
-
-// async function BagPage(bagId) {
-// }
 
 export default BagPage;

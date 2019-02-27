@@ -14,11 +14,9 @@ app.get('/bag/:bagId', (request, response) => {
 
 app.delete('/bag/:bagId/items/:itemId', (request, response) => {
     const { bagId } = request.params;
-    console.log(bag);
     const bag = database.bag.filter(b => b.id === bagId);
     if (bag.length > 0) {
         const { itemId } = request.params;
-        console.log("itemId");
         const itemExistsInBag = bag[0].items.filter(i => i.id === itemId).length > 0;
         if (itemExistsInBag) {
             response.status(200);

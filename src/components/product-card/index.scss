@@ -17,6 +17,7 @@
         position: absolute;
         top: 0;
         right: 0;
+        cursor: pointer;
     }
 
     .image-container {
@@ -64,7 +65,11 @@
         }
 
         .brandName {
-            margin-top: 6px;
+            font-weight: bold;
+        }
+
+        .price {
+          margin-top: 6px;
         }
     }
 }
